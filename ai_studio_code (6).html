@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yamapldbattle - Ultimate Esports Arena</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+
+    <style>
+        :root {
+            --primary-bg: #0F172A;
+            --secondary-bg: #1E293B;
+            --text-primary: #E2E8F0;
+            --text-secondary: #94A3B8;
+            --accent-color: #FACC15;
+            --border-color: #334155;
+            --navbar-height: 80px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            padding-bottom: 80px; /* Space for mobile sticky bar */
+        }
+
+        /* Typography & Utilities */
+        .text-accent { color: var(--accent-color) !important; }
+        .text-secondary-custom { color: var(--text-secondary) !important; }
+        .bg-secondary-custom { background-color: var(--secondary-bg) !important; }
+        
+        h1, h2, h3, h4, h5, h6 { font-weight: 700; }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: #000;
+            font-weight: 600;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-accent:hover {
+            background-color: #eab308;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(250, 204, 21, 0.4);
+            color: #000;
+        }
+
+        .btn-outline-accent {
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            font-weight: 600;
+            padding: 10px 28px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-accent:hover {
+            background-color: var(--accent-color);
+            color: #000;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border: 2px solid var(--accent-color);
+        }
+
+        .nav-link {
+            color: var(--text-primary) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-color) !important;
+        }
+
+        .dropdown-menu {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+        }
+
+        .dropdown-item {
+            color: var(--text-primary);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--primary-bg);
+            color: var(--accent-color);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding-top: calc(var(--navbar-height) + 60px);
+            padding-bottom: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-headline {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 992px) {
+            .hero-headline { font-size: 3.5rem; }
+        }
+
+        .floating-hero-img {
+            max-width: 300px;
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.2);
+            animation: float 6s ease-in-out infinite;
+            border: 2px solid var(--border-color);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Animation Fade In Up */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Game Slider */
+        .game-slider-section {
+            padding: 80px 0;
+            background-color: var(--secondary-bg);
+        }
+
+        .swiper-slide {
+            width: 280px; /* Fixed width for card look */
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* How It Works */
+        .step-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            font-size: 5rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.03);
+            z-index: -1;
+        }
+
+        .step-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        /* Features */
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .feature-icon-box {
+            width: 60px;
+            height: 60px;
+            background: rgba(250, 204, 21, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .feature-icon-box i {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+        }
+
+        /* FAQ */
+        .accordion-item {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+            border-radius: 8px !important;
+            overflow: hidden;
+        }
+
+        .accordion-button {
+            background-color: var(--secondary-bg);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(250, 204, 21, 0.1);
+            color: var(--accent-color);
+            box-shadow: none;
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+        }
+
+        .accordion-body {
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            background: var(--secondary-bg);
+            text-align: center;
+        }
+
+        /* Sticky Mobile Bar */
+        .mobile-sticky-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--secondary-bg);
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            z-index: 9999;
+            display: none; /* Hidden by default */
+        }
+        
+        @media (max-width: 767px) {
+            .mobile-sticky-bar {
+                display: block;
+            }
+            body {
+                padding-bottom: 90px;
+            }
+        }
+
+        /* Modals */
+        .modal-content {
+            background-color: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-close {
+            filter: invert(1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <img src="https://i.ibb.co/6RG13KNX/6127623111449447402.jpg" class="rounded-circle" alt="Yamapldbattle Logo">
+                <span class="fw-bold text-white">Yamapldbattle</span>
+            </a>
+            
+            <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#how-it-works">How to Play</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">More</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#faq">FAQ</a></li>
+                            <li><hr class="dropdown-divider bg-secondary"></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms & Conditions</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#fairplayModal">Fair Play Policy</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#refundModal">Refund Policy</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-none d-lg-block">
+                    <!-- Added target="_blank" for faster external opening -->
+                    <a href="https://www.mediafire.com/file/rwjgtfgzr23qk1q/Yamapldbattle.y.apk/file" target="_blank" class="btn-accent">Download App <i class="bi bi-download ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero-section text-center">
+        <div class="container">
+            <div class="row align-items-center justify-content-center flex-column-reverse flex-lg-column">
+                <div class="col-lg-10">
+                    <h1 class="hero-headline reveal">
+                        India's Ultimate <span class="text-accent">Esports Arena</span> is Here
+                    </h1>
+                    <p class="lead text-secondary-custom mb-5 reveal" style="transition-delay: 100ms;">
+                        Join thousands of gamers in daily tournaments. Showcase your skills, compete with the best, and win real rewards on the most secure gaming platform.
+                    </p>
+                    <div class="d-flex gap-3 justify-content-center mb-5 reveal" style="transition-delay: 200ms;">
+                        <a href="https://www.mediafire.com/file/rwjgtfgzr23qk1q/Yamapldbattle.y.apk/file" target="_blank" class="btn-accent btn-lg">Download & Start Playing</a>
+                    </div>
+                    <div class="mb-5 reveal" style="transition-delay: 200ms;">
+                         <!-- UPDATED: Changed 50 to 1 -->
+                         <a href="https://www.mediafire.com/file/rwjgtfgzr23qk1q/Yamapldbattle.y.apk/file" target="_blank" class="btn-outline-accent">Get ₹1 on Signup!</a>
+                    </div>
+                    
+                    <div class="reveal" style="transition-delay: 300ms;">
+                        <img src="https://i.ibb.co/6RG13KNX/6127623111449447402.jpg" alt="Hero Game Art" class="floating-hero-img img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Game Slider Section -->
+    <section class="game-slider-section">
+        <div class="container text-center mb-4">
+            <h2 class="text-white mb-2">Tournaments for Your Favorite Games</h2>
+            <p class="text-secondary-custom">Daily matches hosted every hour</p>
+        </div>
+        <div class="swiper gameSwiper">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <img src="https://www.gamerji.com/img/games/FFM.png" alt="Free Fire Max">
+                    <div class="p-3 bg-dark text-center">
+                        <h5 class="m-0 text-white">Free Fire Max</h5>
+                    </div>
+                </div>
+                 <div class="swiper-slide">
+                    <img src="https://www.gamerji.com/img/games/FFM.png" alt="Free Fire Max">
+                    <div class="p-3 bg-dark text-center">
+                        <h5 class="m-0 text-white">Clash Squad</h5>
+                    </div>
+                </div>
+                 <div class="swiper-slide">
+                    <img src="https://www.gamerji.com/img/games/FFM.png" alt="Free Fire Max">
+                    <div class="p-3 bg-dark text-center">
+                        <h5 class="m-0 text-white">Battle Royale</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5 reveal">
+                <h2 class="mb-3">How It Works</h2>
+                <p class="text-secondary-custom">Start your journey in 3 simple steps</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4 reveal">
+                    <div class="step-card">
+                        <span class="step-number">01</span>
+                        <div class="step-icon"><i class="bi bi-cloud-arrow-down-fill"></i></div>
+                        <h4>Download & Register</h4>
+                        <p class="text-secondary-custom">Download the <span class="text-accent fw-bold">Yamapldbattle</span> app and sign up using your mobile number.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal" style="transition-delay: 100ms;">
+                    <div class="step-card">
+                        <span class="step-number">02</span>
+                        <div class="step-icon"><i class="bi bi-joystick"></i></div>
+                        <h4>Join a Tournament</h4>
+                        <p class="text-secondary-custom">Browse upcoming matches for your favorite game and join a lobby.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal" style="transition-delay: 200ms;">
+                    <div class="step-card">
+                        <span class="step-number">03</span>
+                        <div class="step-icon"><i class="bi bi-trophy-fill"></i></div>
+                        <h4>Play, Win & Withdraw</h4>
+                        <p class="text-secondary-custom">Compete, get kills, win the match, and instantly withdraw winnings to UPI.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5 bg-secondary-custom">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-5 mb-lg-0 reveal">
+                    <h2 class="mb-4">Why Gamers Choose <br><span class="text-accent">Yamapldbattle</span>?</h2>
+                    <p class="text-secondary-custom mb-4">We provide the most stable, cheat-free, and rewarding environment for aspiring esports athletes in India.</p>
+                    <a href="https://www.mediafire.com/file/rwjgtfgzr23qk1q/Yamapldbattle.y.apk/file" target="_blank" class="btn-accent">Join the Action</a>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row g-4">
+                        <div class="col-md-6 reveal">
+                            <div class="feature-item">
+                                <div class="feature-icon-box"><i class="bi bi-shield-check"></i></div>
+                                <div>
+                                    <h5>100% Secure & Fair</h5>
+                                    <p class="text-secondary-custom small">Advanced anti-cheat systems ensure fair gameplay for everyone.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 reveal" style="transition-delay: 100ms;">
+                            <div class="feature-item">
+                                <div class="feature-icon-box"><i class="bi bi-lightning-charge"></i></div>
+                                <div>
+                                    <h5>Instant Withdrawals</h5>
+                                    <p class="text-secondary-custom small">Get your winnings directly to your bank or UPI instantly.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 reveal" style="transition-delay: 200ms;">
+                            <div class="feature-item">
+                                <div class="feature-icon-box"><i class="bi bi-people-fill"></i></div>
+                                <div>
+                                    <h5>Referral Program</h5>
+                                    <p class="text-secondary-custom small">Invite friends to <span class="text-accent fw-bold">Yamapldbattle</span> and earn huge bonuses.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 reveal" style="transition-delay: 300ms;">
+                            <div class="feature-item">
+                                <div class="feature-icon-box"><i class="bi bi-headset"></i></div>
+                                <div>
+                                    <h5>24/7 Support</h5>
+                                    <p class="text-secondary-custom small">Dedicated customer support team ready to help you anytime.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5 reveal">Frequently Asked Questions</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 reveal">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    Is playing on Yamapldbattle legal in India?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, playing skill-based games like esports tournaments on <span class="text-accent fw-bold">Yamapldbattle</span> is 100% legal in India (except in states where specific bans apply). It is a game of skill, not chance.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    How long do withdrawals take?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We pride ourselves on speed. Withdrawals on <span class="text-accent fw-bold">Yamapldbattle</span> are processed instantly or within 24 hours to your linked UPI ID or Bank Account.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Are there free tournaments available?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Absolutely! We host daily free entry tournaments where you can compete and win real cash rewards without any investment.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h4 class="mb-3 text-white">Yamapldbattle</h4>
+            <p class="text-secondary-custom small mb-4">
+                This game may involve an element of financial risk and may be addictive. Please play responsibly and at your own risk.
+            </p>
+            <div class="small text-secondary-custom">
+                &copy; 2023 <span class="text-accent fw-bold">Yamapldbattle</span>. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Sticky Download Bar -->
+    <div class="mobile-sticky-bar">
+        <!-- UPDATED: Changed 50 to 1 and added target blank -->
+        <a href="https://www.mediafire.com/file/rwjgtfgzr23qk1q/Yamapldbattle.y.apk/file" target="_blank" class="btn btn-accent w-100 py-3">
+            Download & Get ₹1 <i class="bi bi-download"></i>
+        </a>
+    </div>
+
+    <!-- Modals (Policies) -->
+
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Privacy Policy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>At <span class="text-accent fw-bold">Yamapldbattle</span>, we prioritize the privacy of our users. This Privacy Policy outlines the types of information we collect and how we use it.</p>
+                    <h6>1. Information Collection</h6>
+                    <p>We collect personal information such as name, email, and phone number when you register on <span class="text-accent fw-bold">Yamapldbattle</span>. We also collect device information to ensure fair play and security.</p>
+                    <h6>2. Usage of Information</h6>
+                    <p>Your data is used to manage your account, process transactions, and improve the user experience. We do not sell your personal data to third parties.</p>
+                    <h6>3. Security</h6>
+                    <p>We implement industry-standard security measures to protect your data. However, no method of transmission over the internet is 100% secure.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Terms & Conditions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Welcome to <span class="text-accent fw-bold">Yamapldbattle</span>. By accessing our app, you agree to these terms.</p>
+                    <h6>1. Eligibility</h6>
+                    <p>You must be at least 18 years old to participate in cash contests on <span class="text-accent fw-bold">Yamapldbattle</span>. Residents of Assam, Odisha, Nagaland, Sikkim, Telangana, and Andhra Pradesh are not permitted to play cash games.</p>
+                    <h6>2. User Conduct</h6>
+                    <p>Users must not use cheats, hacks, or any third-party software to manipulate the game. Any violation will lead to immediate account suspension.</p>
+                    <h6>3. Winnings</h6>
+                    <p>Winnings are subject to tax deduction at source (TDS) as per applicable government laws.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fair Play Modal -->
+    <div class="modal fade" id="fairplayModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Fair Play Policy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><span class="text-accent fw-bold">Yamapldbattle</span> is committed to providing a fair gaming environment.</p>
+                    <h6>1. Anti-Hacking Measures</h6>
+                    <p>We use sophisticated algorithms to detect unusual gameplay patterns. Teaming up with enemies or using emulators in mobile-only tournaments is strictly prohibited.</p>
+                    <h6>2. Account Integrity</h6>
+                    <p>Each user is allowed only one account. Multiple accounts to abuse referral bonuses or matchmaking will result in a ban from <span class="text-accent fw-bold">Yamapldbattle</span>.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Refund Modal -->
+    <div class="modal fade" id="refundModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Refund & Cancellation Policy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>This policy details how refunds are handled on <span class="text-accent fw-bold">Yamapldbattle</span>.</p>
+                    <h6>1. Tournament Cancellations</h6>
+                    <p>If a tournament is cancelled by <span class="text-accent fw-bold">Yamapldbattle</span> due to technical issues or lack of participants, the entry fee will be refunded to your wallet immediately.</p>
+                    <h6>2. User Initiated Refunds</h6>
+                    <p>Once you join a tournament, the entry fee is generally non-refundable. However, in cases of accidental transactions, please contact support within 24 hours.</p>
+                    <h6>3. Transaction Failures</h6>
+                    <p>If money is deducted from your bank but not added to your <span class="text-accent fw-bold">Yamapldbattle</span> wallet, the amount will be automatically refunded by your bank within 5-7 working days.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    
+    <script>
+        // Initialize Swiper
+        const swiper = new Swiper('.gameSwiper', {
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+        });
+
+        // Scroll Animation Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 150;
+
+                reveals.forEach((reveal) => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveal.classList.add('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', revealOnScroll);
+            // Trigger once on load
+            revealOnScroll();
+        });
+
+        // Close navbar on mobile click
+        const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+        const menuToggle = document.getElementById('navbarNav');
+        const bsCollapse = new bootstrap.Collapse(menuToggle, {toggle: false});
+        
+        navLinks.forEach((l) => {
+            l.addEventListener('click', () => {
+                if (window.innerWidth < 992) {
+                    bsCollapse.hide();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
